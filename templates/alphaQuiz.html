@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Alphabet Sign Language Quiz</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #f0f4ff, #d9e6ff);
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    .navbar {
+      background-color: white;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 30px;
+      font-size: 24px;
+      font-weight: 600;
+      color: black;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .navbar-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex: 1;
+    }
+
+    .navbar-left img {
+      width: 40px;
+      height: 40px;
+      object-fit: cover;
+      border-radius: 50%;
+    }
+
+    .navbar a {
+      text-decoration: none;
+      color: black;
+      font-size: 16px;
+      font-weight: 450;
+      background-color: none;
+      padding: 6px 12px;
+      border-radius: 6px;
+      transition: background-color 0.3s ease;
+    }
+
+    .quiz-container {
+      flex: 1;
+      background: white;
+      border-radius: 16px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+      width: 700px;
+      max-width: 90%;
+      max-height: 80vh;
+      padding: 20px 30px;
+      margin: 30px auto;
+      overflow: auto;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .progress-bar {
+      height: 8px;
+      background-color: #e0e0e0;
+      border-radius: 4px;
+      overflow: hidden;
+      margin-bottom: 15px;
+    }
+
+    .progress-bar-inner {
+      height: 100%;
+      background-color: #4a6ee0;
+      transition: width 0.4s ease;
+    }
+
+    h3 {
+      margin: 10px 0 20px;
+      font-size: 22px;
+      color: #333;
+      text-align: center;
+    }
+
+    #question-count {
+      text-align: center;
+      font-weight: bold;
+      color: #333;
+      margin-bottom: 5px;
+    }
+
+    .options {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      justify-items: center;
+      margin: 10px 0 30px;
+    }
+
+    .options img {
+      width: 100%;
+      max-width: 280px;
+      height: 180px;
+      object-fit: contain;
+      background: #fff;
+      border: 3px solid #ddd;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: transform 0.25s ease, border-color 0.25s ease;
+    }
+
+    .options img:hover {
+      transform: scale(1.02);
+      border-color: #4a6ee0;
+    }
+
+    .result-container {
+      display: none;
+      text-align: center;
+    }
+
+    .btn {
+      padding: 10px 20px;
+      margin: 10px 5px;
+      background-color: #4a6ee0;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    .btn:hover {
+      background-color: #3652b3;
+    }
+
+    #score-text {
+      color: #222;
+      font-size: 20px;
+      margin-bottom: 15px;
+    }
+
+    #practice-message {
+      color: red;
+      font-weight: 500;
+      margin-bottom: 15px;
+    }
+
+    footer {
+      background-color: #f5f5f5;
+      text-align: center;
+      font-size: 14px;
+      padding: 15px 0;
+      color: #777;
+    }
+
+    @media (max-width: 600px) {
+      .options {
+        grid-template-columns: 1fr;
+      }
+      .options img {
+        max-width: 90%;
+        height: auto;
+      }
+
+      .navbar-left img {
+        width: 32px;
+        height: 32px;
+      }
+
+      .navbar {
+        font-size: 20px;
+        padding: 10px 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="navbar">
+    <div class="navbar-left">
+      <img src="/static/dashboard_images/image.jpg" alt="SignLingo Logo">
+      <span>SignLingo</span>
+    </div>
+    <a href="/quiz" style="color: black; text-decoration: none; margin-left: auto; background-color: rgba(255, 255, 255, 0.2); padding: 6px 12px; border-radius: 6px;">Home</a>
+  </div>
+
+  <div class="quiz-container">
+    <div class="progress-bar">
+      <div class="progress-bar-inner" id="progress"></div>
+    </div>
+    <p id="question-count"></p>
+    <h3 id="question-text"></h3>
+    <div class="options" id="options"></div>
+    <div class="result-container" id="result">
+      <h2 id="score-text"></h2>
+      <p id="practice-message"></p>
+      <button class="btn" onclick="restartQuiz()">Continue Testing</button>
+      <button class="btn" onclick="goToQuiz()">Back to Quiz</button>
+      <button class="btn" onclick="quitQuiz()">Quit</button>
+      <button class="btn" id="practice-btn" style="display:none;" onclick="goToPractice()">Practice Again</button>
+    </div>
+  </div>
+
+  <footer>&copy; 2025 SignLingo. All rights reserved.</footer>
+
+  <script>
+    const questionBank = [
+      {
+        question: "Which sign represents the first letter of the alphabet?",
+        correct: "/static/letter_images/A.jpg",
+        options: ["/static/letter_images/B.jpg", "/static/letter_images/A.jpg", "/static/letter_images/W.jpg", "/static/letter_images/M.jpg"]
+      },
+      {
+        question: "Pick the correct sign for the letter used in 'Ball'.",
+        correct: "/static/letter_images/B.jpg",
+        options: ["/static/letter_images/B.jpg", "/static/letter_images/C.jpg", "/static/letter_images/D.jpg", "/static/letter_images/Z.jpg"]
+      },
+      {
+        question: "Choose the sign for the letter that comes after 'C'.",
+        correct: "/static/letter_images/D.jpg",
+        options: ["/static/letter_images/R.jpg", "/static/letter_images/C.jpg", "/static/letter_images/D.jpg", "/static/letter_images/L.jpg"]
+      },
+      {
+        question: "Find the correct sign for the letter 'E'.",
+        correct: "/static/letter_images/E.jpg",
+        options: ["/static/letter_images/E.jpg", "/static/letter_images/I.jpg", "/static/letter_images/L.jpg", "/static/letter_images/M.jpg"]
+      },
+      {
+        question: "Which sign is for the letter 'Q'?",
+        correct: "/static/letter_images/Q.jpg",
+        options: ["/static/letter_images/Q.jpg", "/static/letter_images/O.jpg", "/static/letter_images/L.jpg", "/static/letter_images/U.jpg"]
+      },
+      {
+        question: "Identify the sign for the letter 'I'.",
+        correct: "/static/letter_images/I.jpg",
+        options: ["/static/letter_images/O.jpg", "/static/letter_images/A.jpg", "/static/letter_images/I.jpg", "/static/letter_images/B.jpg"]
+      },
+      {
+        question: "Choose the sign that matches the letter 'X'.",
+        correct: "/static/letter_images/X.jpg",
+        options: ["/static/letter_images/X.jpg", "/static/letter_images/I.jpg", "/static/letter_images/C.jpg", "/static/letter_images/D.jpg"]
+      },
+      {
+        question: "What is the sign for the letter 'Z'?",
+        correct: "/static/letter_images/Z.jpg",
+        options: ["/static/letter_images/I.jpg", "/static/letter_images/Z.jpg", "/static/letter_images/L.jpg", "/static/letter_images/X.jpg"]
+      },
+      {
+        question: "Pick the correct sign for the letter 'O'.",
+        correct: "/static/letter_images/O.jpg",
+        options: ["/static/letter_images/O.jpg", "/static/letter_images/Z.jpg", "/static/letter_images/A.jpg", "/static/letter_images/M.jpg"]
+      },
+      {
+        question: "Which sign corresponds to the letter 'L'?",
+        correct: "/static/letter_images/L.jpg",
+        options: ["/static/letter_images/L.jpg", "/static/letter_images/Q.jpg", "/static/letter_images/C.jpg", "/static/letter_images/Z.jpg"]
+      }
+    ];
+
+    let questions = [], current = 0, score = 0, hasAnswered = false;
+
+    function shuffle(array) {
+      for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+      }
+      return array;
+    }
+
+    function selectRandomQuestions(num) {
+      return shuffle([...questionBank]).slice(0, num);
+    }
+
+    function loadQuestion() {
+      hasAnswered = false;
+      const q = questions[current];
+      document.getElementById('question-count').innerText = `Question ${current + 1} of ${questions.length}`;
+      document.getElementById('question-text').innerText = q.question;
+      const options = shuffle([...q.options]);
+      const optionsContainer = document.getElementById('options');
+      optionsContainer.innerHTML = '';
+
+      options.forEach(src => {
+        const img = document.createElement('img');
+        img.src = src;
+        img.alt = "Option Image";
+        img.onclick = () => {
+          if (!hasAnswered) checkAnswer(src, img);
+        };
+        optionsContainer.appendChild(img);
+      });
+
+      document.getElementById('progress').style.width = ((current / questions.length) * 100) + '%';
+
+      const nextBtn = document.createElement('button');
+      nextBtn.innerText = "Next";
+      nextBtn.className = "btn";
+      nextBtn.style.display = "none";
+      nextBtn.id = "next-btn";
+      nextBtn.onclick = goToNextQuestion;
+      optionsContainer.appendChild(nextBtn);
+    }
+
+    function checkAnswer(selectedSrc, selectedImg) {
+      hasAnswered = true;
+      const correctSrc = questions[current].correct;
+      const optionImages = document.querySelectorAll('#options img');
+
+      optionImages.forEach(img => {
+        img.style.pointerEvents = 'none';
+        if (img.src.includes(correctSrc)) {
+          img.style.border = '3px solid green';
+        }
+        if (img === selectedImg && !img.src.includes(correctSrc)) {
+          img.style.border = '3px solid red';
+        }
+      });
+
+      if (selectedSrc === correctSrc) {
+        score++;
+      }
+
+      document.getElementById('next-btn').style.display = 'inline-block';
+    }
+
+    function goToNextQuestion() {
+      current++;
+      if (current < questions.length) {
+        loadQuestion();
+      } else {
+        showResult();
+      }
+    }
+
+    function showResult() {
+      document.getElementById('question-count').style.display = 'none';
+      document.getElementById('question-text').style.display = 'none';
+      document.getElementById('options').style.display = 'none';
+      document.getElementById('progress').style.width = '100%';
+      document.getElementById('result').style.display = 'block';
+      document.getElementById('score-text').innerText = `Your score is ${score} out of ${questions.length}`;
+
+      if (score < 4) {
+        document.getElementById('practice-message').innerText = 'Your score is low. Please practice again before retrying.';
+        document.getElementById('practice-btn').style.display = 'inline-block';
+      }
+    }
+
+    function restartQuiz() {
+      current = 0;
+      score = 0;
+      questions = selectRandomQuestions(5);
+      document.getElementById('result').style.display = 'none';
+      document.getElementById('question-count').style.display = 'block';
+      document.getElementById('question-text').style.display = 'block';
+      document.getElementById('options').style.display = 'grid';
+      document.getElementById('practice-message').innerText = '';
+      document.getElementById('practice-btn').style.display = 'none';
+      loadQuestion();
+    }
+
+    function goToPractice() {
+      window.location.href = 'practice.html';
+    }
+
+    function goToQuiz() {
+      window.location.href = 'Quiz.html';
+    }
+
+    function quitQuiz() {
+      window.location.href = 'Quiz.html';
+    }
+
+    questions = selectRandomQuestions(5);
+    loadQuestion();
+  </script>
+</body>
+</html>
+
+    
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SignLingo - Learn Sign Language</title>
+  <link rel="stylesheet" href="/static/CSS/dashboard.css">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+  <div class="app-container">
+
+    <!-- Header -->
+    <header>
+      <div class="container">
+        <div class="logo">
+          <img src="/static/logo.png" class="logo-img">
+          <span class="logo-text">SignLingo</span>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+      <div class="container">
+
+        <!-- Hero Section -->
+        <section class="hero-section">
+          <div class="dot-pattern"></div>
+          <div class="hero-content">
+            <h1>Welcome to SignLingo !</h1>
+            <p>Begin your journey to master sign language, one gesture at a time.</p>
+          </div>
+        </section>
+
+        <!-- Category Tabs -->
+        <section class="category-tabs">
+          <button class="tab-btn active" data-category="learn">Learn</button>
+          <button class="tab-btn" data-category="practice">Practice</button>
+          <button class="tab-btn" data-category="community">Community</button>
+        </section>
+
+        <!-- Learn Section -->
+        <section class="category-section active" id="learnSection">
+          <div class="section-header">
+            <div class="category-label">Learning Resources</div>
+            <p class="category-description">Watch videos and learn sign language at your own pace</p>
+          </div>
+
+          <div class="card-grid">
+            <div class="card">
+              <div class="card-image-container">
+                <img src="/static/dashboard_images/alphabet.jpg" alt="Alphabet Learning" class="card-image">
+              </div>
+              <div class="card-content">
+                <h3 class="card-title">Alphabet Learning</h3>
+                <p class="card-description">Learn sign language for A-Z alphabets with video tutorials</p>
+                <div class="card-action">
+                  <a href="/alpha" class="action-btn primary-btn">
+                    <span>Start</span>
+                    <i class="fas fa-arrow-right"></i>
+                  </a>
+                </div>
+              </div>
+            </div>
+            
+
+            <!-- Card 2 -->
+            <div class="card">
+              <div class="card-image-container">
+                <img src="/static/dashboard_images/digits.jpeg" alt="Basic Math" class="card-image">
+              </div>
+              <div class="card-content">
+                <h3 class="card-title">Basic Math</h3>
+                <p class="card-description">Learn sign language for numbers and basic math operations</p>
+                <div class="card-action">
+                  <a href="/Numerical" class="action-btn secondary-btn" style="text-decoration: none;">
+                    <span>Start</span>
+                    <i class="fas fa-arrow-right"></i>
+                  </a>
+                </div>
+              </div>
+            </div>
+            
+
+            <!-- Card 3 -->
+            <div class="card">
+              <div class="card-image-container">
+                <img src="/static/dashboard_images/phrases.jpeg" alt="Daily Phrases" class="card-image">
+              </div>
+              <div class="card-content">
+                <h3 class="card-title">Daily Phrases</h3>
+                <p class="card-description">Learn common conversational phrases in sign language</p>
+                <div class="card-action">
+                  <a href="{{ url_for('phrases') }}">
+                    <button class="action-btn accent-btn">
+                      <span>Start</span>
+                      <i class="fas fa-arrow-right"></i>
+                    </button>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Practice Section -->
+        <section class="category-section" id="practiceSection">
+          <div class="section-header">
+            <div class="category-label practice-label">Practice Your Skills</div>
+            <p class="category-description">Test your knowledge and get real-time feedback</p>
+          </div>
+
+          <div class="card-grid">
+            <!-- Predictor Card -->
+            <div class="card">
+              <div class="card-image-container">
+                <img src="/static/dashboard_images/predictor.jpg" alt="Sign Language Predictor" class="card-image">
+              </div>
+              <div class="card-content">
+                <h3 class="card-title">Sign Language Predictor</h3>
+                <p class="card-description">Practice your signs with real-time feedback using your camera</p>
+                <div class="card-action">
+                  <a href="{{ url_for('choose_mode') }}">
+                    <button class="action-btn info-btn">
+                      <span>Start</span>
+                      <i class="fas fa-arrow-right"></i>
+                    </button>
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            <!-- Quiz Card -->
+            <div class="card">
+              <div class="card-image-container">
+                <img src="/static/dashboard_images/phrases.jpeg" alt="Test Yourself" class="card-image">
+              </div>
+              <div class="card-content">
+                <h3 class="card-title">Test Yourself</h3>
+                <p class="card-description">Take a quiz to test your sign language knowledge</p>
+                <div class="card-action">
+                  <a href="/quiz" class="quiz-btn">
+                    <span>Start</span>
+                    <i class="fas fa-arrow-right"></i>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Community Section -->
+        <section class="category-section" id="communitySection">
+          <div class="section-header">
+            <div class="category-label community-label">Join Our Community</div>
+            <p class="category-description">Connect with others and share your journey</p>
+          </div>
+
+          <div class="card-grid">
+            <!-- Hall of Fame -->
+            <div class="card">
+              <div class="card-image-container">
+                <img src="/static/dashboard_images/community.jpeg" alt="Hall of Fame" class="card-image">
+              </div>
+              <div class="card-content">
+                <h3 class="card-title">Hall of Fame</h3>
+                <p class="card-description">Learn about influential people in the deaf and mute community</p>
+                <div class="card-action">
+                  <a href="/community" class="action-btn accent-btn">
+                    <span>Explore</span>
+                    <i class="fas fa-arrow-right"></i>
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            <!-- Forum -->
+            <div class="card">
+              <div class="card-image-container">
+                <img src="/static/dashboard_images/forum.jpg" alt="Forum" class="card-image">
+              </div>
+              <div class="card-content">
+                <h3 class="card-title">Forum</h3>
+                <p class="card-description">Join our community forum to connect with others</p>
+                <div class="card-action">
+                  <button class="action-btn secondary-btn" onclick="window.location.href='/forum'">
+                    <span>Join</span>
+                    <i class="fas fa-arrow-right"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Feedback -->
+            <div class="card">
+              <div class="card-image-container">
+                <img src="/static/dashboard_images/feedback.avif" alt="Your Feedback" class="card-image">
+              </div>
+              <div class="card-content">
+                <h3 class="card-title">Your Feedback</h3>
+                <p class="card-description">Share your experience and help us improve</p>
+                <div class="card-action">
+                  <a href="/feedback" class="action-btn primary-btn">
+                    <span>Share</span>
+                    <i class="fas fa-arrow-right"></i>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+      <div class="container">
+        <div class="footer-content">
+          <p class="copyright">© 2025 SignLingo. All rights reserved.</p>
+          <p class="tagline">Limitless expression, one sign at a time</p>
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <!-- Tab Switching Script -->
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const tabButtons = document.querySelectorAll('.tab-btn');
+      const sections = {
+        learn: document.getElementById('learnSection'),
+        practice: document.getElementById('practiceSection'),
+        community: document.getElementById('communitySection')
+      };
+
+      tabButtons.forEach(button => {
+        button.addEventListener('click', () => {
+          tabButtons.forEach(btn => btn.classList.remove('active'));
+          Object.values(sections).forEach(section => section.classList.remove('active'));
+          button.classList.add('active');
+          const category = button.getAttribute('data-category');
+          if (sections[category]) {
+            sections[category].classList.add('active');
+          }
+        });
+      });
+    });
+  </script>
+
+  <script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
+</body>
+</html>

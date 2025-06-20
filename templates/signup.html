@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>SignUp - SignLearn</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='CSS/signup.css') }}" />
+</head>
+<body>
+  <div class="container">
+    <div class="right">
+      <!-- Static background image will be handled via CSS -->
+    </div>
+
+    <div class="left">
+      <div class="form-box">
+        <h2>Create an Account</h2>
+        <form id="signup-form">
+          <input type="text" id="firstName" placeholder="First Name" required />
+          <input type="text" id="lastName" placeholder="Last Name" required />
+          <label for="signup-email">Email:</label>
+          <input type="email" id="signup-email" required />
+
+          <label for="signup-password">Password:</label>
+          <input type="password" id="signup-password" required />
+
+          <button type="submit">Sign Up</button>
+        </form>
+        <p>Already have an account? <a href="{{ url_for('login') }}">Login here</a></p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Pass dashboard URL to JS -->
+  <script>
+    window.dashboardUrl = "{{ url_for('dashboard') }}";
+  </script>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+    import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+    import { getDatabase, ref, set } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-database.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyAxqNhlZ02JtitXowZEGd5NMv7KuXABJ50",
+      authDomain: "signlearn-1f2a5.firebaseapp.com",
+      projectId: "signlearn-1f2a5",
+      storageBucket: "signlearn-1f2a5.appspot.com",
+      messagingSenderId: "1075676672522",
+      appId: "1:1075676672522:web:6a4f6fe0c1ffb5b56ce5f3",
+      measurementId: "G-E943026E81",
+      databaseURL: "https://signlearn-1f2a5-default-rtdb.firebaseio.com"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getDatabase(app);
+
+    document.getElementById("signup-form").addEventListener("submit", function (e) {
+      e.preventDefault();
+
+      const firstName = document.getElementById("firstName").value.trim();
+      const lastName = document.getElementById("lastName").value.trim();
+      const email = document.getElementById("signup-email").value.trim();
+      const password = document.getElementById("signup-password").value;
+
+      if (!firstName || !lastName || !email || !password) {
+        alert("Please fill all the fields.");
+        return;
+      }
+
+      createUserWithEmailAndPassword(auth, email, password)
+        .then((userCredential) => {
+          const user = userCredential.user;
+          return set(ref(db, 'users/' + user.uid), {
+            firstName: firstName,
+            lastName: lastName,
+            email: email
+          });
+        })
+        .then(() => {
+          localStorage.setItem("uid", auth.currentUser.uid);
+          window.location.href = window.dashboardUrl;
+        })
+        .catch((error) => {
+          alert("Error: " + error.message);
+        });
+    });
+  </script>
+</body>
+</html>

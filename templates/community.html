@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Deaf Community Story Showcase</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='CSS/community.css') }}">
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="logo-container" style="display: flex; align-items: center;">
+      <img src="{{ url_for('static', filename='dashboard_images/image.jpg') }}" alt="Logo" style="height: 40px; width: 40px; object-fit: cover; border-radius: 50%; margin-right: 12px;">
+      <div class="logo">Signlingo</div>
+    </div>
+    <div class="nav-links">
+      <a href="{{ url_for('index') }}">Home</a>
+    </div>
+  </nav>
+
+  <!-- Page Content -->
+  <header>
+    <h1>Deaf & Mute Community Story Showcase</h1>
+  </header>
+
+  <main class="card-container">
+    <!-- Story Cards -->
+    <article class="card" data-id="1">
+      <img src="/static/Community_images/Sarah Lin.jpeg Lin.jpeg" alt="Sarah Lin" class="card-image">
+      <h2>Sarah Lin</h2>
+      <p>At just 18, Sarah has become a powerful voice for accessibility advocacy...</p>
+      <button class="read-more">Read More</button>
+    </article>
+
+    <article class="card" data-id="2">
+      <img src="/static/Community_images/Krugger.jpeg" alt="Kruger" class="card-image">
+      <h2>Kruger</h2>
+      <p>Known simply as Kruger, this Australian goalkeeper has represented his country...</p>
+      <button class="read-more">Read More</button>
+    </article>
+
+    <article class="card" data-id="3">
+      <img src="/static/Community_images/Clarke.jpeg" alt="Hafwen Clarke" class="card-image">
+      <h2>Hafwen Clarke</h2>
+      <p>Hafwen made history as the first deaf person to receive an award from the Queen...</p>
+      <button class="read-more">Read More</button>
+    </article>
+
+    <article class="card" data-id="4">
+      <img src="/static/Community_images/Eliis.jpeg" alt="Rose Ayling-Ellis" class="card-image">
+      <h2>Rose Ayling-Ellis</h2>
+      <p>Rose broke barriers as the first deaf contestant to win Strictly Come Dancing...</p>
+      <button class="read-more">Read More</button>
+    </article>
+
+    <article class="card" data-id="5">
+      <img src="/static/Community_images/Pavan.jpeg" alt="Pavan Madduru" class="card-image">
+      <h2>Pavan Madduru</h2>
+      <p>Tech entrepreneur Pavan is revolutionizing communication with AI-powered sign language avatars...</p>
+      <button class="read-more">Read More</button>
+    </article>
+
+    <article class="card" data-id="6">
+      <img src="/static/Community_images/Dr. Cameron.jpeg Cameron.jpeg" alt="Dr. Audrey Cameron" class="card-image">
+      <h2>Dr. Audrey Cameron</h2>
+      <p>Leading marine biologist Dr. Cameron has developed groundbreaking methods for teaching STEM...</p>
+      <button class="read-more">Read More</button>
+    </article>
+  </main>
+
+  <!-- Modal Structure -->
+  <div class="modal-overlay" id="modalOverlay">
+    <div class="modal-content" id="modalContent">
+      <button class="close-btn" id="closeBtn">&times;</button>
+      <div class="modal-scroll" id="modalScroll">
+        <!-- Content inserted by JavaScript -->
+      </div>
+    </div>
+  </div>
+
+  <!-- JSON data for stories -->
+  <script id="story-data" type="application/json">
+    {
+      "1": { "name": "Sarah Lin", "content": "..." },
+      "2": { "name": "Kruger", "content": "..." },
+      "3": { "name": "Hafwen Clarke", "content": "..." },
+      "4": { "name": "Rose Ayling-Ellis", "content": "..." },
+      "5": { "name": "Pavan Madduru", "content": "..." },
+      "6": { "name": "Dr. Audrey Cameron", "content": "..." }
+    }
+  </script>
+
+  <script src="{{ url_for('static', filename='JS/community.js') }}"></script>
+
+  <!-- Footer -->
+  <footer>
+    &copy; 2025 Signlingo. All rights reserved.
+  </footer>
+
+</body>
+</html>

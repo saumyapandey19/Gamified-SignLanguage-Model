@@ -1,0 +1,344 @@
+<!-- Save as numberQuiz.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Number Sign Language Quiz</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #f0f4ff, #d9e6ff);
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    .navbar {
+      background-color: white;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 30px;
+      font-size: 24px;
+      font-weight: 600;
+      color: black;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .navbar .logo-container {
+      display: flex;
+      align-items: center;
+    }
+
+    .navbar img {
+      height: 32px;
+      margin-right: 10px;
+      border-radius: 6px;
+    }
+
+    .navbar a {
+      text-decoration: none;
+      color: black;
+      font-size: 16px;
+      font-weight: 450;
+      background-color: none;
+      padding: 6px 12px;
+      border-radius: 6px;
+      transition: background-color 0.3s ease;
+    }
+
+    .quiz-container {
+      flex: 1;
+      background: white;
+      border-radius: 16px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+      width: 700px;
+      max-width: 90%;
+      padding: 25px 30px;
+      margin: 30px auto;
+      overflow: auto;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .progress-bar {
+      height: 8px;
+      background-color: #e0e0e0;
+      border-radius: 4px;
+      overflow: hidden;
+      margin-bottom: 20px;
+    }
+
+    .progress-bar-inner {
+      height: 100%;
+      background-color: #0097a7;
+      transition: width 0.4s ease;
+    }
+
+    h3 {
+      margin: 15px 0;
+      font-size: 24px;
+      color: #333;
+      text-align: center;
+    }
+
+    #question-count {
+      text-align: center;
+      font-weight: 600;
+      color: #444;
+    }
+
+    .options {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      justify-items: center;
+      margin: 20px 0;
+    }
+
+    .options img {
+      width: 100%;
+      max-width: 260px;
+      height: 160px;
+      object-fit: contain;
+      background: #fff;
+      border: 3px solid #ddd;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: transform 0.25s ease, border-color 0.25s ease;
+    }
+
+    .options img:hover {
+      transform: scale(1.02);
+      border-color: #00796b;
+    }
+
+    .selected.correct {
+      border-color: green !important;
+    }
+
+    .selected.wrong {
+      border-color: red !important;
+    }
+
+    .next-btn {
+      margin-top: 20px;
+      align-self: center;
+      display: none;
+    }
+
+    .btn {
+      padding: 10px 20px;
+      background-color: #0097a7;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    .btn:hover {
+      background-color: #006064;
+    }
+
+    .result-container {
+      display: none;
+      text-align: center;
+    }
+
+    #score-text {
+      color: #222;
+      font-size: 22px;
+      margin-bottom: 15px;
+    }
+
+    #practice-message {
+      color: red;
+      font-weight: 500;
+    }
+
+    .footer {
+      background-color: #f5f5f5;
+      color: #777;
+      text-align: center;
+      padding: 12px;
+      font-size: 13px;
+      margin-top: auto;
+    }
+
+    @media (max-width: 600px) {
+      .options {
+        grid-template-columns: 1fr;
+      }
+
+      .options img {
+        max-width: 90%;
+        height: auto;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="navbar">
+    <div class="logo-container">
+      <img src="/static/dashboard_images/image.jpg" alt="Logo">
+      <span>SignLingo</span>
+    </div>
+    <a href="/quiz">Home</a>
+  </div>
+
+  <div class="quiz-container">
+    <div class="progress-bar">
+      <div class="progress-bar-inner" id="progress"></div>
+    </div>
+    <p id="question-count"></p>
+    <h3 id="question-text"></h3>
+    <div class="options" id="options"></div>
+    <button class="btn next-btn" id="next-btn" onclick="loadNextQuestion()">Next Question</button>
+
+    <div class="result-container" id="result">
+      <h2 id="score-text"></h2>
+      <p id="practice-message"></p>
+      <button class="btn" onclick="restartQuiz()">Continue Testing</button>
+      <button class="btn" onclick="window.location.href='/quiz'">Quit</button>
+      <button class="btn" id="practice-btn" style="display:none;" onclick="goToPractice()">Practice Again</button>
+    </div>
+  </div>
+
+  <div class="footer">&copy; 2025 SignLingo. All rights reserved.</div>
+
+  <script>
+    const questionBank = [
+      {
+        question: "Which image shows the number 1?",
+        correct: "/static/number_images/1.jpg",
+        options: ["/static/number_images/1.jpg", "/static/number_images/2.jpg", "/static/number_images/3.jpg", "/static/number_images/4.jpg"]
+      },
+      {
+        question: "Which image shows the number 5?",
+        correct: "/static/number_images/5.jpg",
+        options: ["/static/number_images/5.jpg", "/static/number_images/6.jpg", "/static/number_images/7.jpg", "/static/number_images/8.jpg"]
+      },
+      {
+        question: "Which image represents number 3?",
+        correct: "/static/number_images/3.jpg",
+        options: ["/static/number_images/2.jpg", "/static/number_images/3.jpg", "/static/number_images/4.jpg", "/static/number_images/1.jpg"]
+      },
+      {
+        question: "Select the sign for number 0.",
+        correct: "/static/number_images/0.jpg",
+        options: ["/static/number_images/5.jpg", "/static/number_images/8.jpg", "/static/number_images/6.jpg", "/static/number_images/0.jpg"]
+      },
+      {
+        question: "Pick the sign for number 8.",
+        correct: "/static/number_images/8.jpg",
+        options: ["/static/number_images/6.jpg", "/static/number_images/8.jpg", "/static/number_images/4.jpg", "/static/number_images/7.jpg"]
+      }
+    ];
+
+    let questions = [];
+    let current = 0;
+    let score = 0;
+
+    function shuffle(array) {
+      for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+      }
+      return array;
+    }
+
+    function selectRandomQuestions(num) {
+      return shuffle([...questionBank]).slice(0, num);
+    }
+
+    function loadQuestion() {
+      const q = questions[current];
+      document.getElementById('question-count').innerText = `Question ${current + 1} of ${questions.length}`;
+      document.getElementById('question-text').innerText = q.question;
+      const optionsContainer = document.getElementById('options');
+      optionsContainer.innerHTML = '';
+      document.getElementById('next-btn').style.display = 'none';
+
+      const options = shuffle([...q.options]);
+      options.forEach(src => {
+        const img = document.createElement('img');
+        img.src = src;
+        img.alt = "Sign Option";
+        img.onclick = () => checkAnswer(img, src);
+        optionsContainer.appendChild(img);
+      });
+
+      document.getElementById('progress').style.width = ((current / questions.length) * 100) + '%';
+    }
+
+    function checkAnswer(imgEl, selected) {
+      const correct = questions[current].correct;
+      const allOptions = document.querySelectorAll('.options img');
+
+      allOptions.forEach(img => img.onclick = null);
+      if (selected === correct) {
+        score++;
+        imgEl.classList.add('selected', 'correct');
+      } else {
+        imgEl.classList.add('selected', 'wrong');
+        allOptions.forEach(img => {
+          if (img.src.includes(correct)) img.classList.add('selected', 'correct');
+        });
+      }
+      document.getElementById('next-btn').style.display = 'block';
+    }
+
+    function loadNextQuestion() {
+      current++;
+      if (current < questions.length) {
+        loadQuestion();
+      } else {
+        showResult();
+      }
+    }
+
+    function showResult() {
+      document.getElementById('question-count').style.display = 'none';
+      document.getElementById('question-text').style.display = 'none';
+      document.getElementById('options').style.display = 'none';
+      document.getElementById('next-btn').style.display = 'none';
+      document.getElementById('progress').style.width = '100%';
+      document.getElementById('result').style.display = 'block';
+      document.getElementById('score-text').innerText = `You scored ${score} out of ${questions.length}`;
+      if (score < 4) {
+        document.getElementById('practice-message').innerText = 'Keep practicing! You can do better.';
+        document.getElementById('practice-btn').style.display = 'inline-block';
+      }
+    }
+
+    function restartQuiz() {
+      current = 0;
+      score = 0;
+      questions = selectRandomQuestions(5);
+      document.getElementById('result').style.display = 'none';
+      document.getElementById('question-count').style.display = 'block';
+      document.getElementById('question-text').style.display = 'block';
+      document.getElementById('options').style.display = 'grid';
+      document.getElementById('practice-message').innerText = '';
+      document.getElementById('practice-btn').style.display = 'none';
+      loadQuestion();
+    }
+
+    function goToPractice() {
+      window.location.href = 'number_practice.html';
+    }
+
+    // Start quiz
+    questions = selectRandomQuestions(5);
+    loadQuestion();
+  </script>
+</body>
+</html>

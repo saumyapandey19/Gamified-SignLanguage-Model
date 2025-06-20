@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Choose Practice Mode</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #f0f4ff, #d9e6ff);
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    /* Navbar */
+    .navbar {
+      background-color: white;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 30px;
+      font-size: 24px;
+      font-weight: 600;
+      color: black;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .logo-container {
+      display: flex;
+      align-items: center;
+    }
+
+    .logo-container img {
+      height: 36px;
+      width: 36px;
+      object-fit: cover;
+      margin-right: 10px;
+      border-radius: 6px;
+    }
+
+    .logo-container span {
+      font-size: 22px;
+      font-weight: 600;
+    }
+
+    .navbar a {
+      text-decoration: none;
+      color: black;
+      font-size: 16px;
+      font-weight: 450;
+      background-color: none;
+      padding: 6px 12px;
+      border-radius: 6px;
+      transition: background-color 0.3s ease;
+    }
+
+    .navbar a:hover {
+      background-color: rgba(255,255,255,0.3);
+    }
+
+    /* Main content */
+    .main {
+      flex: 1;
+      text-align: center;
+      padding: 100px 20px 60px;
+    }
+
+    .main h1 {
+      font-size: 32px;
+      margin-bottom: 30px;
+      color: #333;
+    }
+
+    .main button {
+      padding: 15px 30px;
+      margin: 10px;
+      font-size: 18px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      background-color: #4a6ee0;
+      color: white;
+      transition: background-color 0.3s;
+    }
+
+    .main button:hover {
+      background-color: #3652b3;
+    }
+
+    #status {
+      margin-top: 30px;
+      color: green;
+      font-weight: bold;
+    }
+
+    /* Footer */
+    footer {
+      background-color: #f5f5f5;
+      text-align: center;
+      font-size: 14px;
+      padding: 15px 0;
+      color: #777;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="navbar">
+    <div class="logo-container">
+      <img src="/static/dashboard_images/image.jpg" alt="Logo">
+      <span>SignLingo</span>
+    </div>
+    <a href="/dashboard">Home</a>
+  </div>
+
+  <div class="main">
+    <h1>Select Practice Mode</h1>
+
+    <button onclick="startModel('alphabet')">Alphabet</button>
+    <button onclick="startModel('number')">Number</button>
+    <button onclick="startModel('phrases')">Phrases</button>
+
+    <p id="status"></p>
+  </div>
+
+  <footer>
+    © 2025 SignLingo. All rights reserved.
+  </footer>
+
+  <script>
+    function startModel(mode) {
+      fetch(`http://127.0.0.1:5000/start-${mode}`, {
+        method: 'POST',
+      })
+      .then(response => response.text())
+      .then(data => {
+        document.getElementById("status").innerText = "✅ " + data;
+      })
+      .catch(error => {
+        document.getElementById("status").innerText = "❌ Failed: " + error;
+        console.error("Error:", error);
+      });
+    }
+  </script>
+
+</body>
+</html>

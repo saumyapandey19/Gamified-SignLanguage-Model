@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SignLingo - Learn Sign Language</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='CSS/dashboard.css') }}">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+  <style>
+    .profile-nav-group {
+      display: flex;
+      align-items: center;
+      gap: 0;
+    }
+    .main-nav {
+      margin-left: 0 !important;
+    }
+    .main-nav ul {
+      display: flex !important;
+      gap: 0 !important;
+      margin-left: 0 !important;
+    }
+    .main-nav ul li {
+      margin-left: 0 !important;
+    }
+    @media (max-width: 768px) {
+      .main-nav ul {
+        display: none !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="app-container">
+
+    <!-- Header -->
+    <header>
+      <div class="container">
+        <div class="logo">
+          <img src="{{ url_for('static', filename='dashboard_images/image.jpg') }}" class="logo-img">
+          <span class="logo-text">SignLingo</span>
+        </div>
+        <div class="profile-nav-group" style="margin-left:auto;">
+          <div class="profile-container">
+            <div class="profile-icon" id="profileToggle">
+              <i class="fas fa-user"></i>
+            </div>
+            <div class="profile-dropdown" id="profileDropdown">
+              <div class="profile-info">
+                <p class="profile-name">User Name</p>
+                <p class="profile-email">user@email.com</p>
+              </div>
+              <div class="profile-actions">
+                <button class="logout-btn">
+                  <i class="fas fa-sign-out-alt"></i>
+                  <span>Logout</span>
+                </button>
+              </div>
+            </div>
+          </div>
+          <nav class="main-nav" style="margin-left:0;">
+            <ul style="margin-left:0;">
+              <li><a href="{{ url_for('home') }}">Home</a></li>
+            </ul>
+          </nav>
+        </div>
+        <div class="mobile-menu-toggle" id="mobileMenuToggle">
+          <i class="fas fa-bars"></i>
+        </div>
+      </div>
+
+      <!-- Mobile menu -->
+      <div class="mobile-menu" id="mobileMenu">
+        <ul>
+          <li><a href="{{ url_for('home') }}">Home</a></li>
+          <li><a href="#learnSection">Learn</a></li>
+          <li><a href="#practiceSection">Practice</a></li>
+          <li><a href="#communitySection">Community</a></li>
+        </ul>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+      <div class="container">
+
+        <!-- Category Tabs -->
+        <section class="category-tabs">
+          <button class="tab-btn active" data-category="learn">Learn</button>
+          <button class="tab-btn" data-category="practice">Practice</button>
+          <button class="tab-btn" data-category="community">Community</button>
+        </section>
+
+        <!-- Learning Resources Section -->
+        <section class="category-section active" id="learnSection">
+          <div class="section-header">
+            <div class="category-label">Learning Resources</div>
+            <p class="category-description">Watch videos and learn sign language at your own pace</p>
+          </div>
+
+          <div class="card-grid">
+            <!-- Card 1 -->
+            <div class="card">
+              <div class="card-image-container">
+                <img src="{{ url_for('static', filename='dashboard_images/alphabet.jpg') }}" alt="Alphabet Learning" class="card-image">
+              </div>
+              <div class="card-content">
+                <h3 class="card-title">Alphabet Learning</h3>
+                <p class="card-description">Learn sign language for A-Z alphabets with video tutorials</p>
+                <div class="card-action">
+                  <a href="{{ url_for('alphabet_learning') }}">
+                    <button class="action-btn primary-btn">
+                      <span>Start</span>
+                      <i class="fas fa-arrow-right"></i>
+                    </button>
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            <!-- Card 2 -->
+            <div class="card">
+              <div class="card-image-container">
+                <img src="{{ url_for('static', filename='dashboard_images/digits.jpeg') }}" alt="Basic Math" class="card-image">
+              </div>
+              <div class="card-content">
+                <h3 class="card-title">Basic Math</h3>
+                <p class="card-description">Learn sign language for numbers and basic math operations</p>
+                <div class="card-action">
+                  <a href="{{ url_for('numerical_learning') }}">
+                    <button class="action-btn secondary-btn">
+                      <span>Start</span>
+                      <i class="fas fa-arrow-right"></i>
+                    </button>
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            <!-- Card 3 -->
+            <div class="card">
+              <div class="card-image-container">
+                <img src="{{ url_for('static', filename='dashboard_images/phrases.jpeg') }}" alt="Daily Phrases" class="card-image">
+              </div>
+              <div class="card-content">
+                <h3 class="card-title">Daily Phrases</h3>
+                <p class="card-description">Learn common conversational phrases in sign language</p>
+                <div class="card-action">
+                  <a href="{{ url_for('phrases_learning') }}">
+                    <button class="action-btn accent-btn">
+                      <span>Start</span>
+                      <i class="fas fa-arrow-right"></i>
+                    </button>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Practice Section -->
+        <section class="category-section" id="practiceSection">
+          <div class="section-header">
+            <div class="category-label practice-label">Practice Your Skills</div>
+            <p class="category-description">Test your knowledge and get real-time feedback</p>
+          </div>
+
+          <div class="card-grid">
+            <!-- Card 1 -->
+            <div class="card">
+              <div class="card-image-container">
+                <img src="{{ url_for('static', filename='dashboard_images/predictor.jpg') }}" alt="Sign Language Predictor" class="card-image">
+              </div>
+              <div class="card-content">
+                <h3 class="card-title">Sign Language Predictor</h3>
+                <p class="card-description">Practice your signs with real-time feedback using your camera</p>
+                <div class="card-action">
+                  <a href="{{ url_for('choose_mode') }}">
+                    <button class="action-btn info-btn">
+                      <span>Start</span>
+                      <i class="fas fa-arrow-right"></i>
+                    </button>
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            <!-- Card 2 -->
+            <div class="card">
+              <div class="card-image-container">
+                <img src="{{ url_for('static', filename='dashboard_images/predictor.jpg') }}" alt="Test Yourself" class="card-image">
+              </div>
+              <div class="card-content">
+                <h3 class="card-title">Test Yourself</h3>
+                <p class="card-description">Take a quiz to test your sign language knowledge</p>
+                <div class="card-action">
+                  <a href="{{ url_for('quiz_home') }}">
+                    <button class="action-btn info-btn">
+                      <span>Start</span>
+                      <i class="fas fa-arrow-right"></i>
+                    </button>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Community Section -->
+        <section class="category-section" id="communitySection">
+          <div class="section-header">
+            <div class="category-label community-label">Join Our Community</div>
+            <p class="category-description">Connect with others and share your journey</p>
+          </div>
+
+          <div class="card-grid">
+            <!-- Hall of Fame -->
+            <div class="card">
+              <div class="card-image-container">
+                <img src="{{ url_for('static', filename='dashboard_images/community.jpeg') }}" alt="Hall of Fame" class="card-image">
+              </div>
+              <div class="card-content">
+                <h3 class="card-title">Hall of Fame</h3>
+                <p class="card-description">Learn about influential people in the deaf and mute community</p>
+                <div class="card-action">
+                  <a href="{{ url_for('community') }}" class="action-btn accent-btn">
+                    <span>Explore</span>
+                    <i class="fas fa-arrow-right"></i>
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            <!-- Forum -->
+            <div class="card">
+              <div class="card-image-container">
+                <img src="{{ url_for('static', filename='dashboard_images/forum.jpg') }}" alt="Forum" class="card-image">
+              </div>
+              <div class="card-content">
+                <h3 class="card-title">Forum</h3>
+                <p class="card-description">Join our community forum to connect with others</p>
+                <div class="card-action">
+                  <a href="{{ url_for('forum') }}">
+                    <button class="action-btn secondary-btn">
+                      <span>Join</span>
+                      <i class="fas fa-arrow-right"></i>
+                    </button>
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            <!-- Feedback -->
+            <div class="card">
+              <div class="card-image-container">
+                <img src="{{ url_for('static', filename='dashboard_images/feedback.avif') }}" alt="Your Feedback" class="card-image">
+              </div>
+              <div class="card-content">
+                <h3 class="card-title">Your Feedback</h3>
+                <p class="card-description">Share your experience and help us improve</p>
+                <div class="card-action">
+                  <a href="{{ url_for('feedback') }}" class="action-btn primary-btn">
+                    <span>Share</span>
+                    <i class="fas fa-arrow-right"></i>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+      </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+      <div class="container">
+        <div class="footer-content">
+          <p class="copyright">© 2025 SignLingo. All rights reserved.</p>
+          <p class="tagline">Limitless expression, one sign at a time</p>
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <script src="{{ url_for('static', filename='JS/dashboard.js') }}"></script>
+</body>
+</html>

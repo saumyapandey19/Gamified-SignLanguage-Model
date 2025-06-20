@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>SignLingo - Learn Sign Language</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet"/>
+  <link rel="stylesheet" href="/static/CSS/alpha.css" />
+</head>
+<body class="flex flex-col min-h-screen bg-background text-foreground">
+  <!-- Navbar -->
+  <header class="w-full border-b bg-white">
+    <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+      <!-- Logo -->
+      <div class="flex items-center gap-2">
+        <img
+          src="https://uploadthingy.s3.us-west-1.amazonaws.com/2svPmfAdfM7zG5z5etPYMh/photo_6237522279349208719_x.jpg"
+          alt="SignLingo Logo"
+          class="h-10 w-auto object-contain"
+        />
+        <span class="font-bold text-xl">SignLingo</span>
+      </div>
+
+      <!-- Navigation -->
+      <nav>
+        <ul class="flex gap-6">
+          <li><a href="/" class="text-gray-700 hover:text-gray-900" id="nav-home">Home</a></li>
+
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="flex-1 w-full">
+    <div class="container py-8">
+      <div class="max-w-7xl mx-auto">
+        <!-- Page Header -->
+        <div class="mb-8 page-header">
+          <h1 class="text-3xl font-bold mb-2">Alphabet Learning</h1>
+          <p class="text-gray-600">
+            Explore and master the English alphabet using sign language through
+            engaging, interactive video lessons.
+          </p>
+        </div>
+
+        <!-- Bigger Grid -->
+        <div class="grid grid-cols-1 lg:grid-cols-4 gap-6 content-grid">
+          <!-- Video Player Section -->
+          <div class="lg:col-span-3 video-section">
+            <div class="video-container" id="video-container" style="max-width: 100%; aspect-ratio: 16 / 9;" class="relative">
+              <!-- Video or iframe will be injected here by JS -->
+            </div>
+            <div class="video-controls">
+              <h2 id="video-title" class="video-title">
+                A for Apple - Introduction to Sign Language Alphabet
+              </h2>
+              <div class="controls-buttons">
+                <button id="prev-btn" class="btn btn-secondary" disabled>‹ Previous</button>
+                <button id="next-btn" class="btn btn-secondary">Next ›</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Video List -->
+          <div class="video-list-section">
+            <h2 class="video-list-title">Video Lessons</h2>
+            <div id="video-list" class="video-list">
+              <!-- Example Video Card -->
+              <button class="video-card" data-video-id="A">
+                <div class="video-thumbnail">
+                  <img src="https://images.unsplash.com/photo-1568702846914-96b305d2aaeb" alt="A thumbnail"/>
+                  <div class="play-overlay">
+                    <svg class="play-icon" viewBox="0 0 24 24" fill="currentColor">
+                      <path d="M8 5v14l11-7z"/>
+                    </svg>
+                  </div>
+                </div>
+                <div class="video-info">
+                  <h3>A for Apple - Introduction to Sign Language Alphabet</h3>
+                  <div class="video-meta">
+                    <span>3:45</span>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                    </svg>
+                  </div>
+                </div>
+              </button>
+              <!-- More video buttons (B–Z) to be added via JS or manually -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="w-full bg-gray-100 py-4">
+    <div class="container mx-auto px-4 text-center text-sm text-gray-600 footer-info">
+      © <span id="current-year">2025</span> SignLingo | 
+      <a href="#" class="hover:text-gray-900">Privacy Policy</a> | 
+      <a href="#" class="hover:text-gray-900">Terms of Service</a>
+    </div>
+  </footer>
+
+  <script src="/static/JS/alpha.js"></script>
+</body>
+</html>

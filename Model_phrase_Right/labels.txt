@@ -1,0 +1,8 @@
+yes
+no
+bye
+please
+sorry
+thank you
+nice to meet you
+hello
